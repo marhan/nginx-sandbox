@@ -5,10 +5,43 @@
   vars_files:
     - vars/main.yml
 
-  pre_tasks:
-    - name: Update apt cache if needed.
-      apt: update_cache=yes cache_valid_time=86400
-
   tasks:
-    - name: nginx is installed
-      apt: name=nginx state=installed
+    - name: "'/etc/*' configuration files are present"
+      copy:
+        src: "{{ item }}"
+        dest: "/etc/{{ item }}"
+        backup: yes
+      with_items:
+        - hosts
+        - hostname
+
+    - name: "Jenkins GPG key added"
+      apt_key:
+        url: http://pkg.jenkins.io/debian/jenkins.io.key
+        state: present
+
+    - name: "Jenkins repository added"
+      apt_repository:
+        repo: 'deb http://pkg.jenkins.io/debian binary/'
+        state: present
+
+    - name: "Jenkins is present"
+      apt:
+        name: jenkins
+        state: latest
+        update_cache: yes
+
+    - name: "NGINX is installed"
+      apt:
+        name: nginx
+        state: installed
+
+    - name: "NGINX is configured"
+      copy:
+        src: "services.conf"
+        dest: "/etc/nginx/conf.d/services.conf"
+
+    - name: "NGINX restarted"
+      service:
+        name: "nginx"
+        state: restarted
