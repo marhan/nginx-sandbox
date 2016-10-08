@@ -16,3 +16,8 @@ In /etc/hosts add following entry:
 ```bash
 192.168.33.33 sandbox.local jenkins.sandbox.local
 ``` 
+
+## Visit vhosts
+
+[Default Page](http://sandbox.local/)
+[Jenkins](http://jenkins.sandbox.local/)
