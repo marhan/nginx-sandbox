@@ -36,11 +36,6 @@
         name: nginx
         state: installed
 
-    - name: "NGINX deafult configuration is absent"
-      file:
-        path: '/etc/nginx/sites-enabled/default'
-        state: absent
-
     - name: "NGINX jenkins vhost configured"
       copy:
         src: "jenkins"

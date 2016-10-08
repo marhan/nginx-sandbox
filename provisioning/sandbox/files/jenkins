@@ -1,18 +1,4 @@
 server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
-
-	index index.html index.htm index.nginx-debian.html;
-
-	server_name sandbox;
-
-	location / {
-		try_files $uri $uri/ =404;
-	}
-
-}
-
-server {
 
     server_name jenkins.sandbox.local;
 
