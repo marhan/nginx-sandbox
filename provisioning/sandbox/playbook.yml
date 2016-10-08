@@ -1,5 +1,5 @@
 ---
-- hosts: nginx
+- hosts: sandbox
   gather_facts: yes
 
   vars_files:
@@ -36,10 +36,15 @@
         name: nginx
         state: installed
 
-    - name: "NGINX is configured"
+    - name: "NGINX deafult configuration is absent"
+      file:
+        path: '/etc/nginx/sites-enabled/default'
+        state: absent
+
+    - name: "NGINX jenkins vhost configured"
       copy:
-        src: "services.conf"
-        dest: "/etc/nginx/conf.d/services.conf"
+        src: "jenkins"
+        dest: "/etc/nginx/sites-enabled/jenkins"
 
     - name: "NGINX restarted"
       service:
